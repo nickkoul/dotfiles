@@ -7,22 +7,31 @@ lsp_zero.on_attach(function(client, bufnr)
   lsp_zero.default_keymaps({buffer = bufnr})
 end)
 
-lsp_zero.format_on_save({
-  format_opts = {
-    async = false,
-    timeout_ms = 10000,
-  },
-  servers = {
-    ['prettier'] = {'javascript', 'typescript'},
+
+require('lspconfig').ts_ls.setup({})
+require('lspconfig').lua_ls.setup({
+  settings = {
+    Lua = {
+      completion = {
+        callSnippet = "Replace"
+      }
+    }
   }
 })
+require('lspconfig').angularls.setup({})
 
-require('lspconfig').tsserver.setup({})
-require('lspconfig').lua_ls.setup({})
-require('lspconfig').angularls.setup{}
+
+-- require('lspconfig').eslint.setup({
+--  on_attach = function(client, bufnr)
+--    vim.api.nvim_create_autocmd("BufWritePre", {
+--      buffer = bufnr,
+--      command = "EslintFixAll",
+--    })
+--  end,
+-- })
 require('mason').setup({})
 require('mason-lspconfig').setup({
-  ensure_installed = {'tsserver', 'lua_ls', 'angularls'},
+  ensure_installed = {'ts_ls', 'lua_ls', 'angularls'},
   handlers = {
     lsp_zero.default_setup,
   }
@@ -49,6 +58,7 @@ cmp.setup({
   }),
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
+    { name = 'nvim_lua' },
     -- { name = 'vsnip' }, -- For vsnip users.
     { name = 'luasnip' }, -- For luasnip users.
     -- { name = 'ultisnips' }, -- For ultisnips users.
@@ -59,4 +69,5 @@ cmp.setup({
 })
 
 vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, opts)
+vim.keymap.set("n", "<leader>ca", function() vim.lsp.buf.code_action()  end, opts)
 

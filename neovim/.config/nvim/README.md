@@ -9,6 +9,8 @@ Copy of Neovim Config for backup and for future computer setup.
 3. Install Neovim: https://github.com/neovim/neovim/releases/tag/stable
 4. Install Packer: https://github.com/wbthomason/packer.nvim#quickstart
 5. Install prettierd: https://github.com/fsouza/prettierd#installation-guide
+6. Install ripgrep: https://github.com/BurntSushi/ripgrep#installation
+  1. Needed for telescope based live search
 6. Open up NeoVim and navigate to packer.lua
 7. Source and Packer Sync
     1. :so
